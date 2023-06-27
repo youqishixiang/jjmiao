@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>电子购物订单信息</title>
+    <link rel="stylesheet" href="../statics/css/public.css">
+    <link rel="stylesheet" href="../statics/css/index1.css">
+    <script src="https://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+</head>
+<script>
+/*    $(function () {
+        $('.myscroll').myScroll({
+            speed: 60, //数值越大，速度越慢
+            rowHeight: 38 //li的高度
+        });
+    });*/
+
+    $(document).ready(function () {
+        var whei = $(window).width()
+        $("html").css({ fontSize: whei / 22 });
+        $(window).resize(function () {
+            var whei = $(window).width();
+            $("html").css({ fontSize: whei / 22 })
+        });
+    });
+</script>
+<body>
+<div class="main">
+    <div class="header">
+        <div class="header-left fl" id="time"></div>
+        <div class="header-center fl">
+            <div class="header-title">
+                电子购物订单数据
+            </div>
+            <div class="header-img"></div>
+        </div>
+        <div class="header-right fl"></div>
+        <div class="header-bottom fl"></div>
+    </div>
+
+
+    <div class="center">
+        <div class="center-left fl">
+            <div class="left-top rightTop border">
+                <div class="title">城市卖家</div>
+                <div class="top-list">
+                    <p>城市卖家物流订单信息汇总</p>
+                    <ul>
+                        <li>
+                            <img src="../statics/images/pic-4.png" alt="">
+                           <span id="list1"></span>
+                        </li>
+                        <li>
+                            <img src="../statics/images/pic-5.png" alt="">
+                            <span id="list2"></span>
+                        </li>
+                        <li>
+                            <img src="../statics/images/pic-5.png" alt="">
+                            <span id="list3"></span>
+                        </li>
+                        <li>
+                            <img src="../statics/images/pic-6.png" alt="">
+                            <span id="list4"></span>
+                        </li>
+                        <li>
+                            <img src="../statics/images/pic-7.png" alt="">
+                            <span id="list5"></span>
+                        </li>
+                        <li>
+                            <img src="../statics/images/pic-5.png" alt="">
+                            <span id="list6"></span>
+                        </li>
+                        <li>
+                            <img src="../statics/images/pic-7.png" alt="">
+                            <span id="list7"></span>
+                        </li>
+                        <li>
+                            <img src="../statics/images/pic-5.png" alt="">
+                            <span id="list8"></span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="left-bottom rightTop border">
+                <div class="title">商品排行</div>
+                <div class="bottom-b">
+                    <!--<div id="chart3" class="allnav"></div>-->
+                    <div class="gun">
+                        <span>排名</span>
+                        <span>商品名称</span>
+                        <span>销量</span>
+
+                    </div>
+                    <div id="FontScroll" class="myscroll">
+                        <ul>
+                            <li>
+                                <div class="fontInner clearfix" id="sales_rank1">
+                                </div>
+                            </li>
+                            <li>
+                                <div class="fontInner clearfix" id="sales_rank2">
+                                </div>
+                            </li>
+                            <li>
+                                <div class="fontInner clearfix" id="sales_rank3">
+                                </div>
+                            </li>
+                            <li>
+                                <div class="fontInner clearfix" id="sales_rank4">
+                                </div>
+                            </li>
+                            <li>
+                                <div class="fontInner clearfix" id="sales_rank5">
+                                </div>
+                            </li>
+                            <li>
+                                <div class="fontInner clearfix" id="sales_rank6">
+                                </div>
+                            </li>
+                            <li>
+                                <div class="fontInner clearfix" id="sales_rank7">
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="center-cen fl">
+            <div class="cen-top rightTop border">
+                <div class="top-title rightTop border">
+                    <ul>
+                        <li>
+                            <p>数量统计</p>
+                            <span id="topc1">365</span>
+                            <b>个</b>
+                            <div class="datashuji">
+                                <span id="topc2">较昨日增加1200人</span>
+                            </div>
+                        </li>
+                        <li>
+                            <p>同比上升</p>
+                            <span id="topc3">1312</span>
+                            <b>人</b>
+                            <div class="dataright">
+                                <span id="topc4">较昨日增加1200人</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="top-bottom rightTop border">
+                    <span id="topc5"></span>
+                </div>
+
+
+            </div>
+            <div class="cen-bottom rightTop border">
+                <div class="title">地区销售数据</div>
+                <div class="bottom-b">
+                    <div id="chart_1" class="allnav"></div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+<script>
+    function get_toplist_data(){
+        $.ajax({
+            url:"http://127.0.0.1:5000/index2/toplist",
+            success:function(data){
+                $("#list1").eq(0).text(data[0][0]+'：'+data[0][1]);
+                $("#list2").eq(0).text(data[1][0]+'：'+data[1][1]);
+                $("#list3").eq(0).text(data[2][0]+'：'+data[2][1]);
+                $("#list4").eq(0).text(data[3][0]+'：'+data[3][1]);
+                $("#list5").eq(0).text(data[4][0]+'：'+data[4][1]);
+                $("#list6").eq(0).text(data[5][0]+'：'+data[5][1]);
+                $("#list7").eq(0).text(data[6][0]+'：'+data[6][1]);
+                $("#list8").eq(0).text(data[7][0]+'：'+data[7][1]);
+            },
+            error:function(xhr, type, errorThrown){
+            }
+        });
+    }
+    get_toplist_data();
+
+            function get_rank_data(){
+        $.ajax({
+            url:"http://127.0.0.1:5000/bigdata/sales_rank",
+            success:function(data){
+                $("#sales_rank1").eq(0).html('<span><b>'+data[0][0]+'</b></span> <span>'+data[0][1]+'</span> <span>'+data[0][2]+'万</span>');
+                $("#sales_rank2").eq(0).html('<span><b>'+data[1][0]+'</b></span> <span>'+data[1][1]+'</span> <span>'+data[1][2]+'万</span>');
+                $("#sales_rank3").eq(0).html('<span><b>'+data[2][0]+'</b></span> <span>'+data[2][1]+'</span> <span>'+data[2][2]+'万</span>');
+                $("#sales_rank4").eq(0).html('<span><b>'+data[3][0]+'</b></span> <span>'+data[3][1]+'</span> <span>'+data[3][2]+'万</span>');
+                $("#sales_rank5").eq(0).html('<span><b>'+data[4][0]+'</b></span> <span>'+data[4][1]+'</span> <span>'+data[4][2]+'万</span>');
+                $("#sales_rank6").eq(0).html('<span><b>'+data[5][0]+'</b></span> <span>'+data[5][1]+'</span> <span>'+data[5][2]+'万</span>');
+                $("#sales_rank7").eq(0).html('<span><b>'+data[6][0]+'</b></span> <span>'+data[6][1]+'</span> <span>'+data[6][2]+'万</span>');
+                },
+            error:function(xhr, type, errorThrown){
+            }
+        });
+    }
+    get_rank_data();
+
+        function get_toptitle_data(){
+        $.ajax({
+            url:"http://127.0.0.1:5000/index2/top_title",
+            success:function(data){
+                $("#topc1").eq(0).text(data[0]);
+                $("#topc2").eq(0).text('较昨日增长'+data[1]+'人');
+                $("#topc3").eq(0).text(data[2]);
+                $("#topc4").eq(0).text('较昨日增长'+data[1]+'人');
+                $("#topc5").eq(0).text(data[3]+'件');
+            },
+            error:function(xhr, type, errorThrown){
+            }
+        });
+    }
+    get_toptitle_data();
+</script>
+<script src="https://www.jq22.com/jquery/echarts-4.2.1.min.js"></script>
+<script src="../statics/js/china.js"></script>
+<script src="../statics/js/index2.js"></script>
+
+</body>
+</html>
